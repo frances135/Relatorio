@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Análise de Logs do Servidor Apache</title>
+	<script type="text/javascript" src="app/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="app/js/angular.min.js"></script>
+	<script type="text/javascript" src="app/js/controller.js"></script>
+	<link rel="stylesheet" type="text/css" href="app/css/estilo.css">
+</head>
+<body ng-app="app" ng-controller="controller">
+	<h1>Análise de Logs do Servidor Apache</h1>
+	<div class="refresh">
+		<button ng-click="getLogs();">Refresh</button>
+	</div>
+	<table>
+		<thead>
+			<tr class="head">
+				<th style="width: 7%;">IP do Cliente</th>
+				<th style="width: 8%;">Data de Acesso</th>
+				<th style="width: 5%;">Método HTTP</th>
+				<th style="width: 28%;">Recurso</th>
+				<th style="width: 5%;">Protocolo</th>
+				<th style="width: 3%;">Status</th>
+				<th style="width: 3%;">Quantidade de Bytes</th>
+				<th style="width: 10%;">Dominio</th>
+				<th style="width: 1%;">Indicativo de Request Principal</th>
+				<th style="width: 30%;">Agente da solicitação</th>
+			</tr>
+			<tr>
+				<th>
+					<label>Filtrar por: </label>
+					<input type="text" placeholder="xxx:xxx:xx:xx" style="width: 90%;" ng-model="ipCliente">
+				</th>
+				<th>
+					<label>De:</label><input type="date" placeholder="Filtrar" style="width: 90%;" ng-model="dateDe">
+					<label>Até:</label><input type="date" placeholder="Filtrar" style="width: 90%;" ng-model="dateAte">
+				</th>
+				<th class="filtros">
+					<label>Filtrar por: </label>
+					<select style="width: 90%;" ng-model="httpMethod">
+						<option value="">Todos</option>
+						<option value="GET">GET</option>
+						<option value="HEAD">HEAD</option>
+						<option value="POST">POST</option>
+						<option value="PUT">PUT</option>
+						<option value="DELETE">DELETE</option>
+						<option value="TRACE">TRACE</option>
+						<option value="OPTIONS">OPTIONS</option>
+						<option value="CONNECT">CONNECT</option>
+						<option value="PATCH">PATCH</option>		
+					</select>
+				</th>
+				<th>
+					<label>Filtrar por: </label>
+					<input type="text" placeholder="Use o caracter especial ' % ' como coringa" style="width: 90%;" ng-model="resource">
+				</th>
+				<th></th>
+				<th>
+					<label>Filtrar por: </label>
+					<select style="width: 90%;" ng-model="status">
+						<option value="">Todos</option>
+						<option value="200">200</option>
+						<option value="201">201</option>
+						<option value="202">202</option>
+						<option value="203">203</option>
+						<option value="204">204</option>
+						<option value="205">205</option>
+						<option value="206">206</option>
+						<option value="301">301</option>
+						<option value="302">302</option>
+						<option value="303">303</option>
+						<option value="304">304</option>
+						<option value="400">400</option>
+						<option value="401">401</option>
+						<option value="402">402</option>
+						<option value="403">403</option>
+						<option value="404">404</option>
+						<option value="500">500</option>
+						<option value="501">501</option>
+						<option value="502">502</option>
+						<option value="503">503</option>
+						<option value="504">504</option>
+					</select>
+				</th>
+				<th>
+					<label>Maiores que: </label>
+					<input type="text" placeholder="..." style="width: 90%;" ng-model="bytes">
+				</th>
+				<th></th>
+				<th>
+					<label>Selecione: </label>
+					<input type="checkbox" ng-model="principalRequest">
+				</th>
+				<th>
+					<label>Filtrar por: </label>
+					<input type="text" placeholder="Use o caracter especial ' % ' como coringa" style="width: 90%;" ng-model="userAgent">
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="log in logs">
+				<td style="width: 7%;" class="center">{{log.ipCliente}}</td>
+				<td style="width: 8%;" class="center">{{log.date}}</td>
+				<td style="width: 5%;" class="center">{{log.httpMethod}}</td>
+				<td style="width: 28%;">{{log.resource}}</td>
+				<td style="width: 5%;" class="center">{{log.protocol}}</td>
+				<td style="width: 3%;" class="center">{{log.status}}</td>
+				<td style="width: 3%;" class="center">{{log.bytes}}</td>
+				<td style="width: 10%;">{{log.domain}}</td>
+				<td style="width: 1%;" class="center">{{log.principalRequest}}</td>
+				<td style="width: 30%;">{{log.userAgent}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="loading">
+		<img src="app/images/loading.gif">
+	</div>
+</body>
+</html>

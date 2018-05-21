@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>Relatorio</display-name>
+
+	<context-param>
+		<param-name>resteasy.resources</param-name>
+		<param-value>br.com.relatorio.rest.Relatorios</param-value>
+	</context-param> 
+
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/rest</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>br.com.bb.relatorio.listener.JobListener</listener-class>		
+	</listener>
+
+	<servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+	</servlet>
+
+	<servlet>
+		<description>Servlet de Testes</description>
+		<display-name>teste</display-name>
+		<servlet-name>teste</servlet-name>
+		<servlet-class>br.com.relatorio.servlets.Teste</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>teste</servlet-name>
+		<url-pattern>/teste/*</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>/app/index.html</welcome-file>
+	</welcome-file-list>
+</web-app>
